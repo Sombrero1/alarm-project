@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="alarm_clock">Мои будильники</string>
+    <string name="settings">Настройки</string>
+    <string name="time">Время</string>
+    <string name="days">Дни недели</string>
+    <string name="day_1">ПН</string>
+</resources>
