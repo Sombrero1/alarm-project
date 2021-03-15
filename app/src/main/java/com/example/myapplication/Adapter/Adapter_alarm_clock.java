@@ -1,7 +1,6 @@
 package com.example.myapplication.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.myapplication.MainActivity;
-import com.example.myapplication.MainActivity2;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;

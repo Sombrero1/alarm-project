@@ -82,6 +82,19 @@
         app:constraint_referenced_ids="day_1,day_1_text" />
 
 
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="309dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="-78dp"
+        android:layout_marginRight="-78dp"
+        android:layout_marginBottom="86dp"
+        android:layout_toStartOf="@+id/btn_save"
+        android:layout_toLeftOf="@+id/btn_save"
+        tools:context=".AlarmActivity" />
+
     <ImageButton
         android:id="@+id/btn_save"
         android:layout_width="wrap_content"
@@ -119,13 +132,13 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginBottom="186dp">
+        android:layout_marginStart="7dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginBottom="252dp">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <CheckBox
                 android:id="@+id/day_1"
