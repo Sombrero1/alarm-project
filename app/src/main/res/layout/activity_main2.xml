@@ -65,16 +65,16 @@
         android:text="@string/time"
         android:textAppearance="@style/time" />
 
-    <TextView
-        android:layout_width="152.31dp"
-        android:layout_height="31.43dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="42dp"
-        android:layout_marginTop="167dp"
-        android:gravity="center_horizontal|top"
-        android:text="@string/days"
-        android:textAppearance="@style/time" />
+<!--    <TextView-->
+<!--        android:layout_width="152.31dp"-->
+<!--        android:layout_height="31.43dp"-->
+<!--        android:layout_alignParentLeft="true"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_marginLeft="42dp"-->
+<!--        android:layout_marginTop="167dp"-->
+<!--        android:gravity="center_horizontal|top"-->
+<!--        android:text="@string/days"-->
+<!--        android:textAppearance="@style/time" />-->
 
     <androidx.constraintlayout.widget.Group
         android:layout_width="wrap_content"
@@ -83,6 +83,7 @@
 
 
     <fragment
+        xmlns:map="http://schemas.android.com/apk/res-auto"
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
@@ -93,7 +94,9 @@
         android:layout_marginBottom="86dp"
         android:layout_toStartOf="@+id/btn_save"
         android:layout_toLeftOf="@+id/btn_save"
-        tools:context=".AlarmActivity" />
+        tools:context=".AlarmActivity"
+        map:cameraZoom="13"
+        />
 
     <ImageButton
         android:id="@+id/btn_save"
@@ -123,30 +126,80 @@
         android:layout_marginLeft="25dp"
         android:layout_marginTop="7dp"
         android:gravity="center_horizontal|top"
-        android:text="20:4"
         android:textAppearance="@style/time_clock" />
 
     <TableLayout
-        android:layout_width="406dp"
-        android:layout_height="256dp"
+        android:layout_width="401dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="7dp"
         android:layout_marginLeft="7dp"
-        android:layout_marginBottom="252dp">
+        android:layout_marginBottom="455dp">
 
         <TableRow
+            android:id="@+id/tablerow1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center">
+
 
             <CheckBox
                 android:id="@+id/day_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:foreground="@drawable/checkbox_false"
+                android:button="@drawable/checkbox_selector"
+                android:text="ПН" />
 
-                />
+            <CheckBox
+                android:id="@+id/day_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_selector"
+                android:text="ВТ" />
+
+            <CheckBox
+                android:id="@+id/day_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_selector"
+                android:text="СР" />
+
+            <CheckBox
+                android:id="@+id/day_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_selector"
+                android:text="ЧТ" />
+
+            <CheckBox
+                android:id="@+id/day_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_selector"
+                android:text="ПТ" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tablerow2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <CheckBox
+                android:id="@+id/day_6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_selector"
+                android:text="СБ" />
+
+            <CheckBox
+                android:id="@+id/day_7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_selector"
+                android:text="ВС" />
         </TableRow>
 
         <TableRow
@@ -156,10 +209,34 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
     </TableLayout>
+
+    <EditText
+        android:id="@+id/fromLoc"
+        android:layout_width="197dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/map"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginBottom="0dp"
+        android:ems="10"
+        android:hint="Откуда..."
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/toLoc"
+        android:layout_width="194dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/map"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="-2dp"
+        android:layout_marginRight="-2dp"
+        android:layout_marginBottom="0dp"
+        android:ems="10"
+        android:hint="Куда..."
+        android:inputType="textPersonName" />
 
 </RelativeLayout>

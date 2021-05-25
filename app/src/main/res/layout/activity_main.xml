@@ -23,21 +23,39 @@
             android:elevation="20dp"
             android:id="@+id/view" />
 
-        <TextView
+    <TextView
         android:id="@+id/day_1_text"
-        android:layout_width="317dp"
+        android:layout_width="297dp"
         android:layout_height="57dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="4.14dp"
-        android:layout_marginRight="62dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="89dp"
+        android:layout_marginRight="89dp"
         android:gravity="top"
         android:text="@string/alarm_clock"
-        android:textAppearance="@style/alarm_clock"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:textAppearance="@style/alarm_clock" />
+
+    <ImageButton
+        android:id="@+id/settings"
+        android:layout_width="53dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="237dp"
+        android:background="#00FFFFFF"
+        android:contentDescription="TODO"
+        android:elevation="100dp"
+        android:src="@drawable/settings" />
 
     <ImageButton
         android:id="@+id/btn_save"
@@ -65,18 +83,21 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="665dp"
+        android:layout_height="637dp"
         android:layout_below="@+id/day_1_text"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="18dp"
         android:orientation="vertical">
 
         <ListView
             android:id="@+id/clocks"
             android:layout_width="match_parent"
-            android:layout_height="676dp"
-            android:elevation="100dp" />
+            android:layout_height="569dp"
+            android:elevation="100dp">
+
+        </ListView>
+
     </LinearLayout>
     <!--    </ScrollView>-->
 

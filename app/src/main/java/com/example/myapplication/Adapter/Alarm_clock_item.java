@@ -3,29 +3,28 @@ package com.example.myapplication.Adapter;
 import java.io.Serializable;
 
 public class Alarm_clock_item implements Serializable {
-    private int id;
+
+    private int id;//primary
     private String time;
     private long timeMil;
-    private String days;
-    private boolean checkbox;
+    private boolean[] checkboxs;
+    private Double[] geo;
+    private boolean selected;
 
-    public Alarm_clock_item(String time,long timeMil, String days, boolean checkbox){
-
+    public Alarm_clock_item(String time,long timeMil, Double[] geo, boolean[] checkbox,boolean selected){
         this.time = time;
         this.timeMil = timeMil;
-        this.days = days;
-        this.checkbox = checkbox;
+        this.checkboxs = checkbox;
+        this.geo = geo;
+        this.selected = selected;
     }
-    public Alarm_clock_item(int id,String time,long timeMil, String days, boolean checkbox){
-        this.id = id;
-        this.time = time;
-        this.timeMil = timeMil;
-        this.days = days;
-        this.checkbox = checkbox;
+
+
+
+    public Double[] getGeo() {
+        return geo;
     }
-    public int getId(){
-        return id;
-    }
+
 
     public String getTime() {
         return time;
@@ -35,28 +34,24 @@ public class Alarm_clock_item implements Serializable {
         this.time = time;
     }
 
-    public String getDays() {
-        return days;
-    }
-
-    public void setDays(String days) {
-        this.days = days;
-    }
-
-    public boolean isCheckbox() {
-        return checkbox;
-    }
-
-    public void setCheckbox(boolean checkbox) {
-        this.checkbox = checkbox;
-    }
-
     public long getTimeMil() {
         return timeMil;
     }
 
-    public void setTimeMil(long timeMil) {
-        this.timeMil = timeMil;
+    public boolean[] getCheckboxs() {
+        return checkboxs;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setId(int id) {
