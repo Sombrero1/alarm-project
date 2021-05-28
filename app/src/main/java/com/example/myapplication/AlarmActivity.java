@@ -53,6 +53,7 @@ public class AlarmActivity extends AppCompatActivity implements View.OnClickList
     private EditText fromLoc;
     private EditText toLoc;
     private int id;
+    
 
 
     @Override
