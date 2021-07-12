@@ -110,15 +110,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.concurrent.ExecutionException;
-
-import android.os.AsyncTask;
-import android.util.Log;
-
-import com.example.myapplication.models.Alarm;
-
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
 
 
 public class Database{
@@ -133,7 +124,12 @@ public class Database{
 
         Gson gson = new Gson();
         if (gson.fromJson(sharedPreferences.getString("alarms",""),ArrayList.class)!= null){
-            items = new ArrayList<>(Arrays.asList((gson.fromJson(sharedPreferences.getString("alarms",""), Alarm_clock_item[].class))));
+            items = new ArrayList<>(
+                    Arrays.asList(
+                            gson.fromJson(sharedPreferences.getString("alarms",""),
+                                    Alarm_clock_item[].class)
+                    )
+            );
 
     }};
 
@@ -146,18 +142,20 @@ public class Database{
                 alarm_clock_item.isSelected());
     }
 
+    static public Alarm_clock_item toAlarmItemFromAlarm(Alarm alarm){
+        return new Alarm_clock_item(alarm.getName(),0,alarm.getGeo(), alarm.getDays(), alarm.isSelected());
+
+    }
+
     public ArrayList<Alarm_clock_item> getClocks(){
         return items;
     }
 
     public void insertClock(Alarm_clock_item alarm_clock_item){
-
             int id = sharedPreferences.getInt("id",0);
             editor.putInt("id",id+1);//primary key
-            alarm_clock_item.setId(id);
             new HttpRequestAlarmPost().execute(toAlarmFromAlarmItem(alarm_clock_item));
-
-        items.add(alarm_clock_item);
+            items.add(alarm_clock_item);
     }
 
     public void updateClock(int id,Alarm_clock_item alarm_clock_item){
@@ -177,30 +175,57 @@ public class Database{
         editor.apply();
     }
 
+    private static String HOST = "http://62.77.153.231:8086";
 
-
-    static public class HttpRequestAlarmPost extends AsyncTask<Alarm,Void, Integer> {
+    static public class HttpRequestAlarmGet extends AsyncTask<Database, Void, Void> {
         @Override
-        protected Integer doInBackground(Alarm... alarm) {
+        protected Void doInBackground(Database... database) {
             try {
-                final String url = "http://192.168.43.187:8080/clocks";
+                final String url = String.format("%s/clocks",HOST);
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-                int id = restTemplate.postForObject(url,alarm[0],Integer.class);
-                Log.d("http post",url);
+                ArrayList<Alarm> alarms = restTemplate.getForObject(url,ArrayList.class);
+                Log.d("http get",url);
+                for (Alarm t: alarms
+                     ) {
+                    database[0].insertClock(Database.toAlarmItemFromAlarm(t));
+                }
 
-                return id;
+
+
             } catch (Exception e) {
                 //не отправился
             }
-            return -1;
+
+            return null;
+        }
+
+    }
+
+
+    static public class HttpRequestAlarmPost extends AsyncTask<Alarm,Void, Void> {
+        @Override
+        protected Integer doInBackground(Alarm... alarm) {
+            try {
+                final String url = String.format("%s/clocks",HOST);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                int id = restTemplate.postForObject(url,alarm[0],Integer.class);
+                alarm[0].setId(id);
+                Log.d("http post",url);
+
+            } catch (Exception e) {
+                //не отправился
+            }
+            return null;
         }
     }
+
     static public class HttpRequestAlarmUpdate extends AsyncTask<Alarm,Void, Void> {
         @Override
         protected Void doInBackground(Alarm... alarms) {
             try {
-                final String url = "http://192.168.43.187:8080/clocks/" + alarms[0].getId();
+                final String url = String.format("%s/clocks",HOST) + alarms[0].getId();
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
                 restTemplate.put(url,alarms[0]);
@@ -217,7 +242,7 @@ public class Database{
         @Override
         protected Void doInBackground(Integer... id) {
             try {
-                final String url = "http://192.168.43.187:8080/clocks/" + id[0];
+                final String url = String.format("%s/clocks",HOST) + id[0];
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.delete(url);
                 Log.d("http delete",url);

@@ -23,14 +23,6 @@ import android.widget.Toast;
 import com.example.myapplication.Adapter.Adapter_alarm_clock;
 import com.example.myapplication.Adapter.Alarm_clock_item;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
@@ -42,12 +34,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     final int MENU_DELETE = 1;
     final int MENU_CANCEL = 2;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         database = new Database(getSharedPreferences("data", Context.MODE_PRIVATE));
+        new Database.HttpRequestAlarmGet(database);
+        super.onStart();
+
 
         adapter_alarm_clock = new Adapter_alarm_clock(this,database.getClocks());
 

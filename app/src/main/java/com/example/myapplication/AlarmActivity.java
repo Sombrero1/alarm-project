@@ -53,7 +53,7 @@ public class AlarmActivity extends AppCompatActivity implements View.OnClickList
     private EditText fromLoc;
     private EditText toLoc;
     private int id;
-    
+
 
 
     @Override
@@ -105,6 +105,23 @@ public class AlarmActivity extends AppCompatActivity implements View.OnClickList
 
         if (alarm_clock_item != null) {
             //загрузка данных
+            //
+//            Geocoder geocoder = new Geocoder(this);
+//            List<Address> addresses;
+//            try {
+//                addresses = geocoder.getFromLocation(alarm_clock_item.getGeo()[0], alarm_clock_item.getGeo()[1],10);
+//                for (Address t: addresses
+//                     ) {
+//                    fromLoc.setText(t.getThoroughfare() );
+//
+//
+//                }
+//
+//
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+            //
             time.setText(toShortTime(alarm_clock_item.getTimeMil()));
             dateAndTime.setTimeInMillis(alarm_clock_item.getTimeMil());
             geo = alarm_clock_item.getGeo();
