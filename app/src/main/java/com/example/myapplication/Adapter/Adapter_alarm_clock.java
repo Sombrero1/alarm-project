@@ -50,7 +50,7 @@ public class Adapter_alarm_clock extends BaseAdapter {
 
 
         ((TextView) view.findViewById(R.id.time_alarm)).setText(alarm_clock_item.getTime());
-        ((TextView) view.findViewById(R.id.days)).setText(getDaysString(alarm_clock_item.getCheckboxs()));
+        ((TextView) view.findViewById(R.id.days)).setText(getDaysString(alarm_clock_item.getDays()));
 
         CheckBox cbBuy = (CheckBox) view.findViewById(R.id.checkbox_alarm);
         cbBuy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -59,7 +59,7 @@ public class Adapter_alarm_clock extends BaseAdapter {
                 alarm_clock_item.setSelected(isChecked);
                 alarm_clock_item.setTime(alarm_clock_item.getTime());//не факт что нужно
                 notifyDataSetChanged();
-                new Database.HttpRequestAlarmUpdate().execute(Database.toAlarmFromAlarmItem(alarm_clock_item));
+                new Database.HttpRequestAlarmUpdate().execute(alarm_clock_item);
             }
         });
         cbBuy.setChecked(alarm_clock_item.isSelected());

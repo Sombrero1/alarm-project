@@ -1,32 +1,26 @@
 package com.example.myapplication.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-
-public class Alarm {//Для отправки
-    private String name;
+public class Alarm  {//Для отправки
+    private String time;
     private int id;
     private Double[] geo;
     private boolean []days; //массив на 7 элементов
     private boolean selected;
 
-    public Alarm(String name, int id, Double[] geo, boolean[]days,boolean selected) {
-        this.name = name;
+    public Alarm(String time, int id, Double[] geo, boolean[]days, boolean selected) {
+        this.time = time;
         this.id = id;
         this.geo = geo;
         this.days = days;
         this.selected = selected;
     }
 
-    public String getName() {
-        return name;
+    public String getTime() {
+        return time;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public int getId() {

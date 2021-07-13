@@ -105,11 +105,13 @@ import com.example.myapplication.Adapter.Alarm_clock_item;
 import com.example.myapplication.models.Alarm;
 import com.google.gson.Gson;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 
 public class Database{
@@ -133,17 +135,9 @@ public class Database{
 
     }};
 
-    static public Alarm toAlarmFromAlarmItem(Alarm_clock_item alarm_clock_item){
-        return new Alarm(
-                alarm_clock_item.getTime(),
-                alarm_clock_item.getId()
-                ,alarm_clock_item.getGeo(),
-                alarm_clock_item.getCheckboxs(),
-                alarm_clock_item.isSelected());
-    }
 
     static public Alarm_clock_item toAlarmItemFromAlarm(Alarm alarm){
-        return new Alarm_clock_item(alarm.getName(),0,alarm.getGeo(), alarm.getDays(), alarm.isSelected());
+        return new Alarm_clock_item(alarm.getTime(),0,alarm.getGeo(), alarm.getDays(), alarm.isSelected());
 
     }
 
@@ -152,15 +146,25 @@ public class Database{
     }
 
     public void insertClock(Alarm_clock_item alarm_clock_item){
-            int id = sharedPreferences.getInt("id",0);
-            editor.putInt("id",id+1);//primary key
-            new HttpRequestAlarmPost().execute(toAlarmFromAlarmItem(alarm_clock_item));
+            new HttpRequestAlarmPost().execute(alarm_clock_item);
             items.add(alarm_clock_item);
+    }
+    public void insertClockWithCheck(Alarm_clock_item alarm_clock_item){
+        for (int i = 0; i < items.size() ; i++) {
+            if(items.get(i).getId() == alarm_clock_item.getId()) {
+                updateClockLocal(i, alarm_clock_item);
+                return;
+            }
+        }
+        items.add(alarm_clock_item);
     }
 
     public void updateClock(int id,Alarm_clock_item alarm_clock_item){
         items.set(id, alarm_clock_item);
-       new HttpRequestAlarmUpdate().execute(toAlarmFromAlarmItem(alarm_clock_item));
+       new HttpRequestAlarmUpdate().execute(alarm_clock_item);
+    }
+    public void updateClockLocal(int i, Alarm_clock_item alarm_clock_item){
+            items.set(i,alarm_clock_item);
     }
 
     public void deleteClock(int id){
@@ -177,35 +181,34 @@ public class Database{
 
     private static String HOST = "http://62.77.153.231:8086";
 
-    static public class HttpRequestAlarmGet extends AsyncTask<Database, Void, Void> {
+    static public class HttpRequestAlarmGet extends AsyncTask<Database, Void, Integer> {
         @Override
-        protected Void doInBackground(Database... database) {
+        protected Integer doInBackground(Database... database) {
             try {
                 final String url = String.format("%s/clocks",HOST);
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-                ArrayList<Alarm> alarms = restTemplate.getForObject(url,ArrayList.class);
+                Alarm_clock_item[]  alarms = restTemplate.getForObject(url, Alarm_clock_item[].class);
                 Log.d("http get",url);
-                for (Alarm t: alarms
-                     ) {
-                    database[0].insertClock(Database.toAlarmItemFromAlarm(t));
+                for (int i = 0; i < alarms.length; i++) {
+                    Log.d("http get3",String.valueOf(alarms[i].getTime()));
+                    database[0].insertClockWithCheck(alarms[i]);
                 }
-
 
 
             } catch (Exception e) {
                 //не отправился
             }
 
-            return null;
+            return 1;
         }
 
     }
 
 
-    static public class HttpRequestAlarmPost extends AsyncTask<Alarm,Void, Void> {
+    static public class HttpRequestAlarmPost extends AsyncTask<Alarm_clock_item,Void, Void> {
         @Override
-        protected Integer doInBackground(Alarm... alarm) {
+        protected Void doInBackground(Alarm_clock_item... alarm) {
             try {
                 final String url = String.format("%s/clocks",HOST);
                 RestTemplate restTemplate = new RestTemplate();
@@ -221,11 +224,11 @@ public class Database{
         }
     }
 
-    static public class HttpRequestAlarmUpdate extends AsyncTask<Alarm,Void, Void> {
+    static public class HttpRequestAlarmUpdate extends AsyncTask<Alarm_clock_item,Void, Void> {
         @Override
-        protected Void doInBackground(Alarm... alarms) {
+        protected Void doInBackground(Alarm_clock_item... alarms) {
             try {
-                final String url = String.format("%s/clocks",HOST) + alarms[0].getId();
+                final String url = String.format("%s/clocks/",HOST) + alarms[0].getId();
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
                 restTemplate.put(url,alarms[0]);
@@ -242,7 +245,7 @@ public class Database{
         @Override
         protected Void doInBackground(Integer... id) {
             try {
-                final String url = String.format("%s/clocks",HOST) + id[0];
+                final String url = String.format("%s/clocks/",HOST) + id[0];
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.delete(url);
                 Log.d("http delete",url);

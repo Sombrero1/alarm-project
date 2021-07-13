@@ -40,6 +40,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.List;
 
@@ -122,10 +123,14 @@ public class AlarmActivity extends AppCompatActivity implements View.OnClickList
 //                e.printStackTrace();
 //            }
             //
-            time.setText(toShortTime(alarm_clock_item.getTimeMil()));
-            dateAndTime.setTimeInMillis(alarm_clock_item.getTimeMil());
+            time.setText(alarm_clock_item.getTime());
+            try {
+                dateAndTime.setTimeInMillis(alarm_clock_item.getTimeMil());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             geo = alarm_clock_item.getGeo();
-            checkBoxSet(alarm_clock_item.getCheckboxs());
+            checkBoxSet(alarm_clock_item.getDays());
             id = alarm_clock_item.getId();
         }
 
@@ -145,7 +150,7 @@ public class AlarmActivity extends AppCompatActivity implements View.OnClickList
                 Double[] geo = {markerA.getPosition().latitude,markerA.getPosition().longitude, markerB.getPosition().latitude,markerB.getPosition().longitude};
                 Alarm_clock_item alarm_clock_item = new Alarm_clock_item(
                         (String) time.getText(),
-                        dateAndTime.getTimeInMillis(),
+                        (int) dateAndTime.getTimeInMillis(),
                         geo,
                         checkBoxSave(),
                         true);

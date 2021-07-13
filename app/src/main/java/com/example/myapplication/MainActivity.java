@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -23,16 +25,26 @@ import android.widget.Toast;
 import com.example.myapplication.Adapter.Adapter_alarm_clock;
 import com.example.myapplication.Adapter.Alarm_clock_item;
 
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.ExecutionException;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
     ListView clocks;
     ImageButton btn_add;
     ImageButton btn_settings;
+    ImageButton btn_sinch;
     Database database;
     Adapter_alarm_clock adapter_alarm_clock;
     final int MENU_DELETE = 1;
     final int MENU_CANCEL = 2;
+    private static String HOST = "http://62.77.153.231:8086";
 
 
     @Override
@@ -40,11 +52,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         database = new Database(getSharedPreferences("data", Context.MODE_PRIVATE));
-        new Database.HttpRequestAlarmGet(database);
-        super.onStart();
 
 
-        adapter_alarm_clock = new Adapter_alarm_clock(this,database.getClocks());
+
+        adapter_alarm_clock = new Adapter_alarm_clock(this, database.getClocks());
+        adapter_alarm_clock.notifyDataSetChanged();
 
         clocks = findViewById(R.id.clocks);
         clocks.setOnItemClickListener(this);
@@ -57,12 +69,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_add = findViewById(R.id.settings);
         btn_add.setOnClickListener(this);
 
+        btn_sinch = findViewById(R.id.sinch);
+        btn_sinch.setOnClickListener(this);
+
         registerForContextMenu(clocks);
+
+        new Database.HttpRequestAlarmGet().execute(database);
+        adapter_alarm_clock.notifyDataSetChanged();
 
     }
 
     @Override
     public void onClick(View v) {
+
         if(v.getId()==R.id.btn_save){
             Intent intent = new Intent(MainActivity.this, AlarmActivity.class);
             startActivityForResult(intent,1);
@@ -70,6 +89,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(v.getId()==R.id.settings){
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
+        }
+        if(v.getId()==R.id.sinch){
+            new Database.HttpRequestAlarmGet().execute(database);
+            adapter_alarm_clock.notifyDataSetChanged();
         }
 };
 

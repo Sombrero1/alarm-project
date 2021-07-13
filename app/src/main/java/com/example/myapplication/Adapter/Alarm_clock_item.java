@@ -1,45 +1,58 @@
 package com.example.myapplication.Adapter;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class Alarm_clock_item implements Serializable {
 
-    private int id;//primary
     private String time;
-    private long timeMil;
-    private boolean[] checkboxs;
+    private int id;
     private Double[] geo;
+    private boolean []days; //массив на 7 элементов
     private boolean selected;
 
-    public Alarm_clock_item(String time,long timeMil, Double[] geo, boolean[] checkbox,boolean selected){
+    public Alarm_clock_item() {
+    }
+
+    public Alarm_clock_item(String time, int id, Double[] geo, boolean[]days, boolean selected) {
         this.time = time;
-        this.timeMil = timeMil;
-        this.checkboxs = checkbox;
+        this.id = id;
         this.geo = geo;
+        this.days = days;
         this.selected = selected;
     }
-
-
-
-    public Double[] getGeo() {
-        return geo;
-    }
-
 
     public String getTime() {
         return time;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setTime(String name) {
+        this.time = name;
     }
 
-    public long getTimeMil() {
-        return timeMil;
+    public int getId() {
+        return id;
     }
 
-    public boolean[] getCheckboxs() {
-        return checkboxs;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Double[] getGeo() {
+        return geo;
+    }
+
+    public void setGeo(Double[] geo) {
+        this.geo = geo;
+    }
+
+    public boolean[] getDays() {
+        return days;
+    }
+
+    public void setDays(boolean[] days) {
+        this.days = days;
     }
 
     public boolean isSelected() {
@@ -50,11 +63,8 @@ public class Alarm_clock_item implements Serializable {
         this.selected = selected;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public long getTimeMil() throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+        return format.parse(time).getTime();
     }
 }
