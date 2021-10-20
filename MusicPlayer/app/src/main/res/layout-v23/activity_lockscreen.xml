@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="872dp"
+        android:layout_height="466dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.509"
+        app:srcCompat="@drawable/trtrtrt"
+        tools:srcCompat="@drawable/trtrtrt" />
+
+    <TextView
+        android:id="@+id/buss_time"
+        android:layout_width="71dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="40dp"
+        android:padding="4dp"
+        android:text="0 min"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="0 min" />
+
+    <TextView
+        android:id="@+id/car_time"
+        android:layout_width="71dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:padding="4dp"
+        android:text="0 min"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="0 min" />
+
+    <TextView
+        android:id="@+id/ped_time"
+        android:layout_width="71dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="140dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:padding="4dp"
+        android:text="0 min"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="0 min" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="36dp"
+        android:layout_height="34dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/buss_time"
+        app:layout_constraintEnd_toStartOf="@+id/buss_time"
+        app:layout_constraintTop_toTopOf="@+id/buss_time"
+        app:srcCompat="@drawable/icon_public" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginRight="11dp"
+        app:layout_constraintBottom_toBottomOf="@+id/car_time"
+        app:layout_constraintEnd_toStartOf="@+id/car_time"
+        app:layout_constraintTop_toTopOf="@+id/car_time"
+        app:srcCompat="@drawable/icon_car" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginRight="11dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ped_time"
+        app:layout_constraintEnd_toStartOf="@+id/ped_time"
+        app:srcCompat="@drawable/icon_legs" />
+
+    <ImageView
+        android:id="@+id/music_img"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/icon_music" />
+
+    <ImageView
+        android:id="@+id/transport_img"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/strange_img"
+        app:layout_constraintEnd_toStartOf="@+id/strange_img"
+        app:layout_constraintTop_toTopOf="@+id/strange_img"
+        app:srcCompat="@drawable/icon_routes" />
+
+    <ImageView
+        android:id="@+id/strange_img"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/music_img"
+        app:layout_constraintEnd_toStartOf="@+id/music_img"
+        app:layout_constraintTop_toTopOf="@+id/music_img"
+        app:srcCompat="@drawable/icon_smart_things" />
+
+    <TextView
+        android:id="@+id/time_date_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="40dp"
+        android:text="15:50"
+        android:textColor="#000000"
+        android:textSize="72dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>
