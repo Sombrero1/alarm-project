@@ -10,7 +10,7 @@
         </item>
 
         <item name="android:textColor">
-            #E5E5E5
+            @color/main_text
         </item>
 
     </style>
@@ -22,7 +22,7 @@
         </item>
 
         <item name="android:textColor">
-            #E5E5E5
+            @color/main_text
         </item>
 
     </style>
@@ -34,7 +34,7 @@
         </item>
 
         <item name="android:textColor">
-            #E5E5E5
+            @color/main_text
         </item>
 
     </style>
@@ -46,7 +46,7 @@
         </item>
 
         <item name="android:textColor">
-            #E5E5E5
+            @color/main_text
         </item>
 
     </style>
@@ -58,13 +58,13 @@
         </item>
 
         <item name="android:textColor">
-            #E5E5E5
+            @color/main_text
         </item>
 
     </style>
 
     <style name="TimePickerTheme" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">@color/rectangle_18</item>
+        <item name="colorAccent">@color/time_widget</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style> TimePickerDialog timePicker = new TimePickerDialog(mContext, R.style.TimePickerTheme, fromListener, hour, min, false);

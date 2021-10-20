@@ -7,9 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="rectangle_14">#280242</color>
+    <color name="background_view">#FFFFFF</color>
+    <color name="gradient_up">#11b1f3</color>
+    <color name="gradient_down">#0072de</color>
+    <color name="main_text">#000000</color>
     <color name="rectangle_15">#7AFCC7F2</color>
     <color name="rectangle_16">#F28202</color>
     <color name="rectangle_17">#E5E5E5</color>
-    <color name="rectangle_18">#7B098D</color>
+    <color name="time_widget">#0072de</color>
 </resources>

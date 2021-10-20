@@ -11,16 +11,18 @@ public class Alarm_clock_item implements Serializable {
     private Double[] geo;
     private boolean []days; //массив на 7 элементов
     private boolean selected;
+    private String desc;
 
     public Alarm_clock_item() {
     }
 
-    public Alarm_clock_item(String time, int id, Double[] geo, boolean[]days, boolean selected) {
+    public Alarm_clock_item(String time, int id, Double[] geo, boolean[]days, boolean selected, String desc) {
         this.time = time;
         this.id = id;
         this.geo = geo;
         this.days = days;
         this.selected = selected;
+        this.desc = desc;
     }
 
     public String getTime() {
@@ -51,8 +53,18 @@ public class Alarm_clock_item implements Serializable {
         return days;
     }
 
+
+
     public void setDays(boolean[] days) {
         this.days = days;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     public boolean isSelected() {

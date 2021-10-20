@@ -13,8 +13,6 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -29,7 +27,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.myapplication.Adapter.Alarm_clock_item;
-import com.example.myapplication.models.Alarm;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -49,13 +46,12 @@ public class AlarmActivity extends AppCompatActivity implements View.OnClickList
     private ImageButton btn_save;
     private View time_form;
     private TextView time;
+    private EditText desc;
     private Calendar dateAndTime = Calendar.getInstance();
     private Double []geo;
     private EditText fromLoc;
     private EditText toLoc;
     private int id;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +60,10 @@ public class AlarmActivity extends AppCompatActivity implements View.OnClickList
         btn_cancel = findViewById(R.id.btn_cancel);
         btn_save = findViewById(R.id.btn_save);
         time_form = findViewById(R.id.time_form);
-        time = findViewById(R.id.time_2);
+        time = findViewById(R.id.time_);
         fromLoc = findViewById(R.id.fromLoc);
         toLoc = findViewById(R.id.toLoc);
+        desc = findViewById(R.id.desc);
 
          TextView.OnEditorActionListener listener = new EditText.OnEditorActionListener() {
                     @Override
@@ -77,7 +74,6 @@ public class AlarmActivity extends AppCompatActivity implements View.OnClickList
                                 event.getAction() == KeyEvent.ACTION_DOWN &&
                                 event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
                     if (event == null || !event.isShiftPressed()) {
-                        // the user is done typing.
                         try {
                             if (v.getId() == R.id.fromLoc) markerA.setPosition(getLatLng(((EditText)v).getText().toString()));
                             if (v.getId() == R.id.toLoc) markerB.setPosition(getLatLng(((EditText)v).getText().toString()));
@@ -85,10 +81,10 @@ public class AlarmActivity extends AppCompatActivity implements View.OnClickList
                             Toast.makeText(AlarmActivity.this,"неправильный адрес", Toast.LENGTH_SHORT).show();
                             e.printStackTrace();
                         }
-                        return false; // consume.
+                        return false;
                     }
                 }
-                return false; // pass on to other listeners.
+                return false;
             }
         };
         fromLoc.setOnEditorActionListener(listener);
@@ -153,7 +149,9 @@ public class AlarmActivity extends AppCompatActivity implements View.OnClickList
                         (int) dateAndTime.getTimeInMillis(),
                         geo,
                         checkBoxSave(),
-                        true);
+                        true,
+                        (String) desc.getText().toString()
+                        );
                 alarm_clock_item.setId(id);
 
                 Intent intent = getIntent().putExtra(
@@ -251,8 +249,10 @@ public class AlarmActivity extends AppCompatActivity implements View.OnClickList
 
         // Add a marker in Sydney and move the camera
         LocationManager locMan = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        System.out.println("PERM!!!");
 
-        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},PackageManager.PERMISSION_GRANTED);
+       ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -267,8 +267,16 @@ public class AlarmActivity extends AppCompatActivity implements View.OnClickList
         }
         if(geo == null) {
             Location lastLoc = locMan.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            double lat = lastLoc.getLatitude();//МОЖЕТ КРАШНУТЬСЯ, прописать флаг
-            double lng = lastLoc.getLongitude();
+            double lat, lng;
+            if (lastLoc == null) {
+                lat = 55;
+                lng = 37;
+
+            }
+            else{
+                lat = lastLoc.getLatitude();
+                lng = lastLoc.getLongitude();
+            }
             LatLng gps_user = new LatLng(lat, lng);
             markerA = mMap.addMarker(new MarkerOptions()
                     .position(gps_user)

@@ -102,16 +102,13 @@ import android.util.Log;
 
 
 import com.example.myapplication.Adapter.Alarm_clock_item;
-import com.example.myapplication.models.Alarm;
 import com.google.gson.Gson;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 
 public class Database{
@@ -136,10 +133,6 @@ public class Database{
     }};
 
 
-    static public Alarm_clock_item toAlarmItemFromAlarm(Alarm alarm){
-        return new Alarm_clock_item(alarm.getTime(),0,alarm.getGeo(), alarm.getDays(), alarm.isSelected());
-
-    }
 
     public ArrayList<Alarm_clock_item> getClocks(){
         return items;
@@ -179,13 +172,13 @@ public class Database{
         editor.apply();
     }
 
-    private static String HOST = "http://62.77.153.231:8086";
+    private static String URL = "http://192.168.238.122:8080/events";
 
     static public class HttpRequestAlarmGet extends AsyncTask<Database, Void, Integer> {
         @Override
         protected Integer doInBackground(Database... database) {
             try {
-                final String url = String.format("%s/clocks",HOST);
+                final String url = String.format("%s", URL);
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
                 Alarm_clock_item[]  alarms = restTemplate.getForObject(url, Alarm_clock_item[].class);
@@ -209,16 +202,18 @@ public class Database{
     static public class HttpRequestAlarmPost extends AsyncTask<Alarm_clock_item,Void, Void> {
         @Override
         protected Void doInBackground(Alarm_clock_item... alarm) {
+            final String url = String.format("%s", URL);
             try {
-                final String url = String.format("%s/clocks",HOST);
+
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
                 int id = restTemplate.postForObject(url,alarm[0],Integer.class);
                 alarm[0].setId(id);
-                Log.d("http post",url);
+                Log.d("http post success",url);
 
             } catch (Exception e) {
                 //не отправился
+                Log.d("http post failed",url);
             }
             return null;
         }
@@ -228,7 +223,7 @@ public class Database{
         @Override
         protected Void doInBackground(Alarm_clock_item... alarms) {
             try {
-                final String url = String.format("%s/clocks/",HOST) + alarms[0].getId();
+                final String url = String.format("%s/", URL) + alarms[0].getId();
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
                 restTemplate.put(url,alarms[0]);
@@ -245,7 +240,7 @@ public class Database{
         @Override
         protected Void doInBackground(Integer... id) {
             try {
-                final String url = String.format("%s/clocks/",HOST) + id[0];
+                final String url = String.format("%s/", URL) + id[0];
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.delete(url);
                 Log.d("http delete",url);

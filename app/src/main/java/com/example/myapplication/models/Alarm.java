@@ -6,13 +6,15 @@ public class Alarm  {//Для отправки
     private Double[] geo;
     private boolean []days; //массив на 7 элементов
     private boolean selected;
+    private String desc;
 
-    public Alarm(String time, int id, Double[] geo, boolean[]days, boolean selected) {
+    public Alarm(String time, int id, Double[] geo, boolean[]days, boolean selected, String desc) {
         this.time = time;
         this.id = id;
         this.geo = geo;
         this.days = days;
         this.selected = selected;
+        this.desc = desc;
     }
 
     public String getTime() {
@@ -49,6 +51,14 @@ public class Alarm  {//Для отправки
 
     public boolean isSelected() {
         return selected;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     public void setSelected(boolean selected) {

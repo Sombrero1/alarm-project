@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Adapter_alarm_clock adapter_alarm_clock;
     final int MENU_DELETE = 1;
     final int MENU_CANCEL = 2;
-    private static String HOST = "http://62.77.153.231:8086";
+
 
 
     @Override
